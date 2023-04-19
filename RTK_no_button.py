@@ -14,6 +14,7 @@ def send_rtk(device_name):
     print("Connected to COM port: " + com_port)   
     sensor_data = []
     while True:
+        time.sleep(2)
         getData = ser.readline()                       # read incoming Serial string (latitude, longitude, fix status, horizontal accuracy estimate)
         dataString = getData.decode('utf-8')           # decode incoming UTF-8 endoded byte  
         data = dataString[0:][:-2]
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     RTKs = None
     processes = {}
     while True:
-        time.sleep(4)
+        time.sleep(2)
         print("process", processes)
         try:
             results = requests.get(URL)
@@ -46,7 +47,7 @@ if __name__ == "__main__":
             results = results.json()
         except requests.exceptions.ConnectionError:
             print("\n Failed To Connect To Server. \n")
-            pass
+            continue
         print(results)
         RTKs = results.get("RTK devices")
         running = results.get("running")
